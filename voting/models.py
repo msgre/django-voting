@@ -18,7 +18,7 @@ class Vote(models.Model):
     content_type = models.ForeignKey(ContentType)
     object_id    = models.PositiveIntegerField()
     object       = generic.GenericForeignKey('content_type', 'object_id')
-    created      = models.DateTimeField(u"Datum návštěvy", auto_now_add=True)
+    created      = models.DateTimeField(u"Datum návštěvy", auto_now_add=True, db_index=True)
     vote         = models.SmallIntegerField(choices=SCORES)
 
     objects = VoteManager()
