@@ -102,7 +102,7 @@ def json_error_response(error_message):
                                               error_message=error_message)))
 
 def xmlhttprequest_vote_on_object(request, model, direction,
-    object_id=None, slug=None, slug_field=None):
+    object_id=None, slug=None, slug_field=None, slug_fn=None):
     """
     Generic object vote function for use via XMLHttpRequest.
 
@@ -128,6 +128,9 @@ def xmlhttprequest_vote_on_object(request, model, direction,
     except KeyError:
         return json_error_response(
             '\'%s\' is not a valid vote type.' % direction)
+
+    if slug and slug_fn and callable(slug_fn):
+        slug = slug_fn(slug)
 
     # Look up the object to be voted on
     lookup_kwargs = {}
